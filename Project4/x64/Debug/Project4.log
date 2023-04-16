@@ -1,0 +1,76 @@
+﻿  main.cpp
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(127,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(127,39): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(129,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(129,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\main.cpp(18,48): warning C4244: 'initializing': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\main.cpp(18,27): warning C4244: 'initializing': conversion from 'T' to 'const float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\main.cpp(22,64): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\main.cpp(56,95): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\main.cpp(56,78): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\main.cpp(57,83): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\main.cpp(3,28): warning C4101: 'sorter': unreferenced local variable
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(85,43): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(83,1): message : while compiling class template member function 'void SortingAlgorithms<int>::rects_information(int,int,int,int,int,std::vector<int,std::allocator<int>> &,std::vector<sf::RectangleShape,std::allocator<sf::RectangleShape>> &,bool,int)'
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(50,34): message : see reference to function template instantiation 'void SortingAlgorithms<int>::rects_information(int,int,int,int,int,std::vector<int,std::allocator<int>> &,std::vector<sf::RectangleShape,std::allocator<sf::RectangleShape>> &,bool,int)' being compiled
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\main.cpp(3,28): message : see reference to class template instantiation 'SortingAlgorithms<int>' being compiled
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(86,64): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(86,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(73,43): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(71,1): message : while compiling class template member function 'void SortingAlgorithms<int>::rects_information(int,int,int,int,std::vector<int,std::allocator<int>> &,std::vector<sf::RectangleShape,std::allocator<sf::RectangleShape>> &,bool,int)'
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(29,34): message : see reference to function template instantiation 'void SortingAlgorithms<int>::rects_information(int,int,int,int,std::vector<int,std::allocator<int>> &,std::vector<sf::RectangleShape,std::allocator<sf::RectangleShape>> &,bool,int)' being compiled
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(74,64): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\omer_\OneDrive\Masaüstü\Project4\Project4\Class\SortingClass.h(74,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Project4.vcxproj -> C:\Users\omer_\OneDrive\Masaüstü\Project4\x64\Debug\Project4.exe
