@@ -4,6 +4,11 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(600, 800), "Sorting algorithms visualizer");
     std::vector<SortingAlgorithmButton> sortingbuttons;
     std::vector<Button> buttons;
+    std::vector<std::pair<std::string, void(*)(sf::Event&, std::vector<int>&, int, sf::RenderWindow&, std::vector<sf::RectangleShape>&, int)>> sortingFunctions = {
+    {"Bubble Sort", SortingAlgorithms<int>::bubble_sort},
+    {"Insertion Sort", SortingAlgorithms<int>::insertation_sort},
+    {"Selection Sort", SortingAlgorithms<int>::selection_sort}
+    };
 
 
 
@@ -25,11 +30,10 @@ int main() {
     }
     sf::Font font;
     font.loadFromFile("arial.ttf");
-    SortingAlgorithmButton sort_button{ "Bubble Sort", [](sf::Event& event, std::vector<int>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {SortingAlgorithms<int>::bubble_sort(event,arr,size,window,rects,rectWidth);} };
-    sortingbuttons.push_back(sort_button);
-    SortingAlgorithmButton sort_button1{ "Insertation Sort", [](sf::Event& event, std::vector<int>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {SortingAlgorithms<int>::insertation_sort(event,arr,size,window,rects,rectWidth);} };
-    sortingbuttons.push_back(sort_button1);
-
+    for (auto it = sortingFunctions.begin(); it != sortingFunctions.end(); ++it) {
+        SortingAlgorithmButton button{ it->first, it->second };
+        sortingbuttons.push_back(button);
+    }
 
     for (int i = 0;i < sortingbuttons.size();i++) {
         Button button = button_creator(150, 50, 100, 100 + 75 * i, sortingbuttons[i].name, font);

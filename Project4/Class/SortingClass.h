@@ -38,14 +38,16 @@ public:
 
     static void insertation_sort(sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
         int i, key, j;
-        bool swapped = false;
+        swapped = false;
         for (i = 1;i < size && continue_;i++) {
             key = arr[i];
             j = i - 1;
+         
 
             while (j >= 0 && arr[j] > key && continue_) {
                 arr[j + 1] = arr[j];
                 j = j - 1;
+                continue_ = window_open(window);
                 swapped = true;
                 rects_information(i, j + 1, j + 2, size, rectWidth, arr, rects, swapped, window.getSize().y);
                 visualizer(window, rects, size);
@@ -53,12 +55,36 @@ public:
             }
             arr[j + 1] = key;
             event_checker(event, window);
+            continue_ = window_open(window);
 
 
         }
 
     }
-    static void selection_sort(T* arr, int size);
+    static void selection_sort(sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
+        int i, j, min_idx;
+        swapped = true;
+
+        for (i = 0;i < size && continue_;i++) {
+            min_idx = i;
+            for (j = i + 1;j < size && continue_;j++) {
+                rects_information(i, j, min_idx, size, rectWidth, arr, rects, swapped, window.getSize().y);
+                visualizer(window, rects, size);
+                event_checker(event, window);
+                continue_ = window_open(window);
+
+                if (arr[j] < arr[min_idx]) {
+                    min_idx = j;
+                }
+                
+            }
+            if (min_idx != i) {
+                    std::swap(arr[min_idx], arr[i]);
+                    swapped = true;
+
+                }
+            }
+        }
     static void visualizer(sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int array_size) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         window.clear();
