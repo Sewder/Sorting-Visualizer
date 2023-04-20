@@ -1,17 +1,17 @@
-    #include "Class/SortingClass.h"
+#include "Class/SortingClass.h"
 int main() {
-    SortingAlgorithms<int> sorter;
     sf::RenderWindow window(sf::VideoMode(600, 800), "Sorting algorithms visualizer");
     std::vector<SortingAlgorithmButton> sortingbuttons;
     std::vector<Button> buttons;
-    std::vector<std::pair<std::string, void(*)(sf::Event&, std::vector<int>&, int, sf::RenderWindow&, std::vector<sf::RectangleShape>&, int)>> sortingFunctions = {
+    std::vector<std::pair<std::string, void(*)(int,int,sf::Event&, std::vector<int>&, int, sf::RenderWindow&, std::vector<sf::RectangleShape>&, int)>> sortingFunctions = {
     {"Bubble Sort", SortingAlgorithms<int>::bubble_sort},
     {"Insertion Sort", SortingAlgorithms<int>::insertation_sort},
-    {"Selection Sort", SortingAlgorithms<int>::selection_sort}
+    {"Selection Sort", SortingAlgorithms<int>::selection_sort},
+        {"Quick_Sort",SortingAlgorithms<int>::quick_sort}
     };
 
 
-
+    srand(time(0));
     const int array_size = 100;
     std::vector<int> arr(array_size);
 
@@ -36,7 +36,7 @@ int main() {
     }
 
     for (int i = 0;i < sortingbuttons.size();i++) {
-        Button button = button_creator(150, 50, 100, 100 + 75 * i, sortingbuttons[i].name, font);
+        Button button = button_creator(150, 50, 225, 100 + 75 * i, sortingbuttons[i].name, font);
         buttons.push_back(button);
     }
     for (auto& button : buttons) {
@@ -58,7 +58,7 @@ int main() {
                 for (int i = 0;i < sortingbuttons.size();i++) {
                     Button button = buttons[i];
                     if (button.shape.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                        sortingbuttons[i].func(event,arr, array_size,window,rects,rectWidth);
+                        sortingbuttons[i].func(0,array_size-1,event, arr, array_size, window, rects, rectWidth);
                         break;
                     }
 
@@ -73,7 +73,6 @@ int main() {
 
         }
     }
-        return 0;
-    }
-
+    return 0;
+}
 

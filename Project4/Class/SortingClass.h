@@ -7,6 +7,8 @@
 #include <future>
 #include"SFML/System.hpp"
 #include "SFML/OpenGL.hpp"
+#include <utility>
+#include <cstdlib>
 
 #ifndef SORTINGCLASS_H
 #define SORTINGCLASS_H
@@ -16,14 +18,14 @@ class SortingAlgorithms {
 public:
     static bool swapped;
     static bool continue_;
-    static void bubble_sort(sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
-        for (int ali = 0; ali < size - 1 && continue_; ali++) {
-            for (int j = 0; j < size - ali - 1 && continue_; j++) {
+    static void bubble_sort(int start,int end,sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
+        for (start;start < size - 1 && continue_; start) {
+            for (int j = 0; j < size - start - 1 && continue_; j++) {
                 event_checker(event, window);
                 continue_ = window_open(window);
                 if (arr[j] > arr[j + 1]) {
                     std::swap(arr[j], arr[j + 1]);
-                    std::cout << j << "aba" << ali << std::endl;
+                    std::cout << j << "aba" << start << std::endl;
                     swapped = true;
                 }
                 rects_information(j, j + 1, size, rectWidth, arr, rects, swapped, window.getSize().y);
@@ -36,13 +38,13 @@ public:
         }
     }
 
-    static void insertation_sort(sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
+    static void insertation_sort(int start,int end,sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
         int i, key, j;
         swapped = false;
         for (i = 1;i < size && continue_;i++) {
             key = arr[i];
             j = i - 1;
-         
+
 
             while (j >= 0 && arr[j] > key && continue_) {
                 arr[j + 1] = arr[j];
@@ -61,14 +63,14 @@ public:
         }
 
     }
-    static void selection_sort(sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
-        int i, j, min_idx;
+    static void selection_sort(int start, int end,sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
+        int j, min_idx;
         swapped = true;
 
-        for (i = 0;i < size && continue_;i++) {
-            min_idx = i;
-            for (j = i + 1;j < size && continue_;j++) {
-                rects_information(i, j, min_idx, size, rectWidth, arr, rects, swapped, window.getSize().y);
+        for (start;start < size && continue_;start++) {
+            min_idx = start;
+            for (j = start + 1;j < size && continue_;j++) {
+                rects_information(start, j, min_idx, size, rectWidth, arr, rects, swapped, window.getSize().y);
                 visualizer(window, rects, size);
                 event_checker(event, window);
                 continue_ = window_open(window);
@@ -76,15 +78,30 @@ public:
                 if (arr[j] < arr[min_idx]) {
                     min_idx = j;
                 }
-                
-            }
-            if (min_idx != i) {
-                    std::swap(arr[min_idx], arr[i]);
-                    swapped = true;
 
-                }
+            }
+            if (min_idx != start) {
+                std::swap(arr[min_idx], arr[start]);
+                swapped = true;
+
             }
         }
+    }
+    static void quick_sort(int start,int end,sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
+        if (start >= end) {
+            return;
+        }
+        if (!continue_) {
+            return;
+        }
+        int p = partipition(start, end, event, arr, rects, window, size, rectWidth);
+        quick_sort(start, p - 1, event, arr, size, window,rects,rectWidth);
+        quick_sort(p + 1, end, event, arr, size, window, rects, rectWidth);
+        
+        
+
+
+    }
     static void visualizer(sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int array_size) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         window.clear();
@@ -136,6 +153,46 @@ public:
             return true;
         }
     }
+    static int partipition( int start, int end,sf::Event& event, std::vector<T>& arr, std::vector<sf::RectangleShape>& rects, sf::RenderWindow& window,int size,int rectWidth) {
+        int pivot = arr[start];
+        int count = 0;
+        for (int i = start + 1;i <= end&& continue_;i++) {
+            if (arr[i] <= pivot) {
+                count++;
+                event_checker(event,window);
+                continue_ = window_open(window);
+
+            }
+        }
+        std::cout << pivot << std::endl;
+        int pivotindex = start + count;
+        std::swap(arr[pivotindex], arr[start]);
+        swapped = true;
+        rects_information(pivotindex, start, size, rectWidth, arr, rects, swapped, window.getSize().y);
+        visualizer(window,rects,size);
+        int i = start, j = end;
+        while(i<pivotindex && j>pivotindex && continue_){
+            while (arr[i] <= pivot && continue_){
+                i++;
+                std::cout << i << std::endl;
+                }
+            while (arr[j] > pivot && continue_) {
+                j--;
+                std::cout << j << std::endl;
+            }
+            if (i<pivotindex && j>pivotindex) {
+                std::swap(arr[i++], arr[j--]);
+                swapped = true;
+                event_checker(event, window);
+                continue_ = window_open(window);
+                rects_information(i+1,j-1, size, rectWidth, arr, rects, swapped, window.getSize().y);
+                visualizer(window, rects, size);
+            }
+        }
+        return pivotindex;
+
+
+    }
 }
 ;
 template<typename T>
@@ -148,7 +205,7 @@ struct Button {
     sf::Text text;
 
 };
-Button button_creator(int width, int height, int x, int y, const std::string& string,sf::Font& font) {
+Button button_creator(int width, int height, int x, int y, const std::string& string, sf::Font& font) {
     Button button;
     button.shape.setSize(sf::Vector2f(width, height));
     button.shape.setFillColor(sf::Color::Green);
@@ -157,15 +214,15 @@ Button button_creator(int width, int height, int x, int y, const std::string& st
 
 
     button.text.setString(string);
-    button.text.setCharacterSize(18);
-    button.text.setFillColor(sf::Color::White);
+    button.text.setCharacterSize(22);
+    button.text.setFillColor(sf::Color::Blue);
     button.text.setPosition(button.shape.getPosition().x + 5, button.shape.getPosition().y + 10);
 
     return button;
 }
 struct SortingAlgorithmButton {
     std::string name;
-    void (*func)(sf::Event&, std::vector<int>&, int, sf::RenderWindow&, std::vector<sf::RectangleShape>&, int);
+    void (*func)(int,int,sf::Event&, std::vector<int>&, int, sf::RenderWindow&, std::vector<sf::RectangleShape>&, int);
 };
 
 #endif
