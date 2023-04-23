@@ -133,6 +133,40 @@ public:
         rects_information(begin, end, size, rectWidth, arr, rects, swapped, window.getSize().y);
         visualizer(window, rects, size);
     }
+    static void cocktail_sorter(int begin, int end, sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
+        swapped = true;
+        while (swapped && continue_ ) {
+            swapped = false;
+            for (int i = begin;i < end && continue_; i++) {
+                if (arr[i] > arr[i + 1]) {
+                    std::swap(arr[i], arr[i + 1]);
+                    swapped = true;
+                    event_checker(event, window);
+                    continue_ = window.isOpen();
+                    rects_information(i,i+1, size, rectWidth, arr, rects, swapped, window.getSize().y);
+                    visualizer(window, rects, size);
+                    swapped = true;
+                }
+            }
+            if (!swapped) {
+                break;
+            }
+            swapped = false;
+            end--;
+            for (int i = end - 1;i >= begin; i--) {
+                if (arr[i] > arr[i + 1]) {
+                    std::swap(arr[i], arr[i + 1]);
+                    swapped = true;
+                    event_checker(event, window);
+                    continue_ = window.isOpen();
+                    rects_information(i, i + 1, size, rectWidth, arr, rects, swapped, window.getSize().y);
+                    visualizer(window, rects, size);
+                    swapped = true;
+                }
+            }
+            begin++;
+        }
+    }
     static void visualizer(sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int array_size) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         window.clear();

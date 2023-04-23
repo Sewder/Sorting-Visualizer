@@ -9,7 +9,8 @@ int main() {
     {"Selection Sort", SortingAlgorithms<int>::selection_sort},
         {"Quick Sort",SortingAlgorithms<int>::quick_sort},
         {"Merge Sort", SortingAlgorithms<int>::merge_sort},
-        {"Bogo Sort",SortingAlgorithms<int>::bogo_sort}
+        {"Bogo Sort",SortingAlgorithms<int>::bogo_sort},
+        {"Cocktail Sort",SortingAlgorithms<int>::cocktail_sorter}
     };
 
 
