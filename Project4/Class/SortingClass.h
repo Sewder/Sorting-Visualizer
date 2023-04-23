@@ -19,10 +19,10 @@ public:
     static bool swapped;
     static bool continue_;
     static void bubble_sort(int start,int end,sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
-        for (start;start < size - 1 && continue_; start) {
+        for (start;start < size - 1 && continue_; start++) {
             for (int j = 0; j < size - start - 1 && continue_; j++) {
                 event_checker(event, window);
-                continue_ = window_open(window);
+                continue_ = window.isOpen();
                 if (arr[j] > arr[j + 1]) {
                     std::swap(arr[j], arr[j + 1]);
                     std::cout << j << "aba" << start << std::endl;
@@ -49,7 +49,7 @@ public:
             while (j >= 0 && arr[j] > key && continue_) {
                 arr[j + 1] = arr[j];
                 j = j - 1;
-                continue_ = window_open(window);
+                continue_ = window.isOpen();
                 swapped = true;
                 rects_information(i, j + 1, j + 2, size, rectWidth, arr, rects, swapped, window.getSize().y);
                 visualizer(window, rects, size);
@@ -57,7 +57,7 @@ public:
             }
             arr[j + 1] = key;
             event_checker(event, window);
-            continue_ = window_open(window);
+            continue_ = window.isOpen();
 
 
         }
@@ -73,7 +73,7 @@ public:
                 rects_information(start, j, min_idx, size, rectWidth, arr, rects, swapped, window.getSize().y);
                 visualizer(window, rects, size);
                 event_checker(event, window);
-                continue_ = window_open(window);
+                continue_ = window.isOpen();
 
                 if (arr[j] < arr[min_idx]) {
                     min_idx = j;
@@ -101,6 +101,37 @@ public:
         
 
 
+    }
+    static void merge_sort(int begin, int end, sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow &window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
+        if (begin >= end) {
+            return;
+        }
+        if (!continue_) {
+            return;
+        }
+        int mid = begin + (end - begin) / 2;
+        merge_sort( begin, mid,event,arr,size,window,rects,rectWidth);
+        merge_sort( mid + 1, end,event,arr,size,window,rects,rectWidth);
+        merger(arr, begin, mid, end);
+        swapped = true;
+        rects_information(mid,begin ,end, size, rectWidth, arr, rects, swapped, window.getSize().y);
+        visualizer(window, rects, size);
+        event_checker(event, window);
+        continue_ = window.isOpen();
+    }
+    static void bogo_sort(int begin, int end, sf::Event& event, std::vector<T>& arr, int size, sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int rectWidth) {
+        while (!is_not_sorted(arr, size)&& continue_) {
+            shuffle(arr, size);
+            swapped = true;
+            event_checker(event, window);
+            continue_ = window.isOpen();
+            rects_information(begin, end, size, rectWidth, arr, rects, swapped, window.getSize().y);
+            visualizer(window, rects, size);
+        }
+        event_checker(event, window);
+        continue_ = window.isOpen();
+        rects_information(begin, end, size, rectWidth, arr, rects, swapped, window.getSize().y);
+        visualizer(window, rects, size);
     }
     static void visualizer(sf::RenderWindow& window, std::vector<sf::RectangleShape>& rects, int array_size) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -145,12 +176,19 @@ public:
         }
 
     }
-    static bool window_open(sf::RenderWindow& window) {
-        if (!window.isOpen()) {
-            return false;
+    static bool is_not_sorted(std::vector<T>& arr, int size) {
+        int i = 0;
+        while (i <size-1) {
+            if (arr[i] > arr[i + 1]) {
+                return false;
+            }
+            i++;
         }
-        else {
-            return true;
+        return true;
+    }
+    static void shuffle(std::vector<T>& arr, int size) {
+        for (int i = 0;i < size;i++) {
+            std::swap(arr[i], arr[rand() % size]);
         }
     }
     static int partipition( int start, int end,sf::Event& event, std::vector<T>& arr, std::vector<sf::RectangleShape>& rects, sf::RenderWindow& window,int size,int rectWidth) {
@@ -159,8 +197,7 @@ public:
         for (int i = start + 1;i <= end&& continue_;i++) {
             if (arr[i] <= pivot) {
                 count++;
-                event_checker(event,window);
-                continue_ = window_open(window);
+
 
             }
         }
@@ -171,6 +208,7 @@ public:
         rects_information(pivotindex, start, size, rectWidth, arr, rects, swapped, window.getSize().y);
         visualizer(window,rects,size);
         int i = start, j = end;
+        std::cout << pivot << std::endl;
         while(i<pivotindex && j>pivotindex && continue_){
             while (arr[i] <= pivot && continue_){
                 i++;
@@ -184,13 +222,55 @@ public:
                 std::swap(arr[i++], arr[j--]);
                 swapped = true;
                 event_checker(event, window);
-                continue_ = window_open(window);
+                continue_ = window.isOpen();
                 rects_information(i+1,j-1, size, rectWidth, arr, rects, swapped, window.getSize().y);
                 visualizer(window, rects, size);
             }
         }
         return pivotindex;
 
+
+    }
+    static void merger(std::vector<T>& arr,int left,int mid ,int right) {
+        int subarray_1 = mid - left + 1;
+        int subarray_2 = right - mid;
+        std::vector<int>leftarr(subarray_1, 0);
+        std::vector<int>rightarr(subarray_2, 0);
+        for (int i = 0;i < subarray_1;i++) {
+            leftarr[i] = arr[left + i];
+
+        }
+        for (int j = 0;j < subarray_2;j++) {
+            rightarr[j] = arr[mid + 1 + j];
+        }
+        int indexarr1 = 0;
+        int indexarr2 = 0;
+        int indexmixarr = left;
+
+        while (indexarr1 < subarray_1 && indexarr2 < subarray_2) {
+            if (leftarr[indexarr1] <= rightarr[indexarr2]) {
+                arr[indexmixarr] = leftarr[indexarr1];
+                indexarr1++;
+            }
+            else {
+                arr[indexmixarr] = rightarr[indexarr2];
+                indexarr2++;
+            }
+            indexmixarr++;
+
+        }
+        while (indexarr1 < subarray_1) {
+            arr[indexmixarr] = leftarr[indexarr1];
+            indexmixarr++;
+            indexarr1++;
+        }
+        while (indexarr2 < subarray_2) {
+            arr[indexmixarr] = rightarr[indexarr2];
+            indexarr2++;
+            indexmixarr++;
+        }
+        leftarr.clear();
+        rightarr.clear();
 
     }
 }

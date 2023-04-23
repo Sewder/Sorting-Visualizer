@@ -7,7 +7,9 @@ int main() {
     {"Bubble Sort", SortingAlgorithms<int>::bubble_sort},
     {"Insertion Sort", SortingAlgorithms<int>::insertation_sort},
     {"Selection Sort", SortingAlgorithms<int>::selection_sort},
-        {"Quick_Sort",SortingAlgorithms<int>::quick_sort}
+        {"Quick Sort",SortingAlgorithms<int>::quick_sort},
+        {"Merge Sort", SortingAlgorithms<int>::merge_sort},
+        {"Bogo Sort",SortingAlgorithms<int>::bogo_sort}
     };
 
 
